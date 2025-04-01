@@ -1,5 +1,6 @@
 package edu.grinnell.csc207.trees;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,7 +20,7 @@ public class BinarySearchTree<T extends Comparable<? super T>> {
 
         /**
          * @param value the value of the node
-         * @param left the left child of the node
+         * @param left  the left child of the node
          * @param right the right child of the node
          */
         Node(T value, Node<T> left, Node<T> right) {
@@ -41,7 +42,8 @@ public class BinarySearchTree<T extends Comparable<? super T>> {
     /**
      * Constructs a new empty binary search tree.
      */
-    public BinarySearchTree() { }
+    public BinarySearchTree() {
+    }
 
     private int sizeH(Node<T> node) {
         if (node == null) {
@@ -84,21 +86,61 @@ public class BinarySearchTree<T extends Comparable<? super T>> {
      * @return the elements of this tree collected via an in-order traversal
      */
     public List<T> toListInorder() {
-        throw new UnsupportedOperationException();
+        //
+        List<T> inorderList = new ArrayList<T>();
+        inorderHelper(inorderList, root);
+        return inorderList;
+    }
+
+    private List<T> inorderHelper(List<T> list, Node<T> cur) {
+        if (cur == null) {
+            return list;
+        } else {
+            inorderHelper(list, cur.left);
+            list.add(cur.value);
+            inorderHelper(list, cur.right);
+        }
+        return list;
     }
 
     /**
      * @return the elements of this tree collected via a pre-order traversal
      */
     public List<T> toListPreorder() {
-        throw new UnsupportedOperationException();
+        List<T> preorderList = new ArrayList<T>();
+        preorderHelper(preorderList, root);
+        return preorderList;
+    }
+
+    private List<T> preorderHelper(List<T> list, Node<T> cur) {
+        if (cur == null) {
+            return list;
+        } else {
+            list.add(cur.value);
+            preorderHelper(list, cur.left);
+            preorderHelper(list, cur.right);
+        }
+        return list;
     }
 
     /**
      * @return the elements of this tree collected via a post-order traversal
      */
     public List<T> toListPostorder() {
-        throw new UnsupportedOperationException();
+        List<T> postorderList = new ArrayList<T>();
+        postorderHelper(postorderList, root);
+        return postorderList;
+    }
+
+    private List<T> postorderHelper(List<T> list, Node<T> cur) {
+        if (cur == null) {
+            return list;
+        } else {
+            postorderHelper(list, cur.left);
+            postorderHelper(list, cur.right);
+            list.add(cur.value);
+        }
+        return list;
     }
 
     ///// Part 2: Contains
@@ -108,35 +150,80 @@ public class BinarySearchTree<T extends Comparable<? super T>> {
      * @return true iff the tree contains <code>value</code>
      */
     public boolean contains(T value) {
-        throw new UnsupportedOperationException();
+        return containsHelper(value, root);
+    }
+
+    private boolean containsHelper(T v, Node<T> cur) {
+        if (cur == null) {
+            return false;
+        } else if (v.compareTo(cur.value) < 0) {
+            containsHelper(v, cur.left);
+        } else if (v.compareTo(cur.value) == 0) {
+            return true;
+        } else {
+            containsHelper(v, cur.right);
+        }
+        return false;
     }
 
     ///// Part 3: Pretty Printing
 
     /**
-     * @return a string representation of the tree obtained via an pre-order traversal in the
+     * @return a string representation of the tree obtained via an pre-order
+     *         traversal in the
      *         form: "[v0, v1, ..., vn]"
      */
+
     public String toStringPreorder() {
-        throw new UnsupportedOperationException();
+        StringBuffer preOrderString = new StringBuffer("[");
+        List<T> list = new ArrayList<T>();
+        preorderHelper(list, root);
+        if(list.size() > 0){
+            preOrderString.append(list.get(0));
+            for (int i = 1; i < list.size(); i++){
+                preOrderString.append(", ");
+                preOrderString.append(list.get(i));
+            }
+        }
+        preOrderString.append("]");
+        return preOrderString.toString();
     }
 
+
     ///// Part 4: Deletion
-  
+
     /*
      * The three cases of deletion are:
-     * 1. (TODO: fill me in!)
-     * 2. (TODO: fill me in!)
-     * 3. (TOOD: fill me in!)
+     * 1. no children
+     * 2. one child
+     * 3. two children
      */
 
     /**
-     * Modifies the tree by deleting the first occurrence of <code>value</code> found
+     * Modifies the tree by deleting the first occurrence of <code>value</code>
+     * found
      * in the tree.
      *
      * @param value the value to delete
      */
     public void delete(T value) {
-        throw new UnsupportedOperationException();
+        if (!contains(value)) {
+            throw new IllegalArgumentException();
+        }
+        deleteH(value, root);
     }
+
+    private Node<T> deleteH(T value, Node<T> root) {
+        if (root == null) {
+            return null;
+        } else if (value.compareTo(root.value) < 0) {
+            root.left = deleteH(value, root.left);
+        } else if (value.compareTo(root.value) > 0) {
+            root.right = deleteH(value, root.right);
+        } else {
+            // replacement case
+            // find the rightmost on the left tree, and up + reorganizes
+    }
+    return null;
+}
 }
