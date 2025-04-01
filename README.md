@@ -1,8 +1,8 @@
 # CSC 207: Trees Lab
 
-Author: _(TODO: insert your name here!)_
+Author: Finn, Emily, Abby
 
 ## Resources
 
-*   _(TODO: list your resources here!)_
-*   ...
+*   Professor Osera's Lecture on binary trees
+*   Reading and lab instructions
