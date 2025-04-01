@@ -19,6 +19,21 @@ public class BinarySearchTreeTests {
         return tree;
     }
 
+    private BinarySearchTree<String> makeStringTree() {
+        BinarySearchTree<String> tree = new BinarySearchTree<String>();
+        tree.insert("Emily");
+        tree.insert("Finn");
+        tree.insert("Abby");
+        tree.insert("Bobhb0");
+        tree.insert("Osera");
+        return tree;
+    }
+
+    private BinarySearchTree<Integer> makeNullTree() {
+        BinarySearchTree<Integer> tree = new BinarySearchTree<Integer>();
+        return tree;
+    }
+
     @Test
     public void emptyTreeTest() {
         BinarySearchTree<Integer> tree = new BinarySearchTree<Integer>();
@@ -64,6 +79,17 @@ public class BinarySearchTreeTests {
     }
 
     @Test
+    public void stringToStringPreorderTest() {
+        assertEquals("[Emily, Abby, Bobhb0, Finn, Osera]", makeStringTree().toStringPreorder());
+    }
+
+    @Test
+    public void nullToStringPreorderTest() {
+        assertEquals("[]", makeNullTree().toStringPreorder());
+    }
+
+
+    @Test
     public void basicDeleteTest() {
         BinarySearchTree<Integer> tree = makeSampleTree();
         assertEquals(5, tree.size());
@@ -73,3 +99,4 @@ public class BinarySearchTreeTests {
         assertFalse(tree.contains(6));
     }
 }
+
